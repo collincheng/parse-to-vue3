@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import parseCode from './generate';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -28,8 +29,9 @@ export function activate(context: vscode.ExtensionContext) {
             const word = doc.getText(selection);
 			console.log(word);
             editor.edit(eb => {
+                const res = parseCode(word);
                 // 文本替换
-                eb.replace(selection, textColorHandle(word));
+                eb.replace(selection, res.code);
             });
         }
     });
